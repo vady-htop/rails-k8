@@ -1,6 +1,6 @@
 FROM vady1/rails-app:latest
 
-RUN cd /opt/app/cassandra-example-using-rails && git pull origin master && rm cassandra-example-using-rails/config/webpacker.yml
+RUN cd /opt/app/cassandra-example-using-rails && git pull origin master 
 
 RUN cd /opt/app/cassandra-example-using-rails && bundle install
 
