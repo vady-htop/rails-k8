@@ -1,6 +1,6 @@
 FROM vady1/rails-app:latest
 
-RUN cd /opt/app/cassandra-example-using-rails && git pull origin master 
+RUN cd /opt/app/cassandra-example-using-rails && git pull origin master
 
 RUN cd /opt/app/cassandra-example-using-rails && bundle install
 
@@ -22,4 +22,4 @@ USER appuser
 
 WORKDIR /opt/app/cassandra-example-using-rails
 
-CMD /opt/app/cassandra-example-using-rails/run.sh
+ENTRYPOINT /opt/app/cassandra-example-using-rails/run.sh
