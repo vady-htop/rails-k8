@@ -1,38 +1,42 @@
-FROM bitnami/ruby:latest
+FROM ruby:2.7.1
 
 RUN mkdir /opt/app
 
 RUN groupadd -g 999 appuser && \
     useradd -r -u 999 -g appuser appuser
 
-RUN chown -R appuser:appuser /opt/app
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update  && apt-get install -y \
     vim \
     nodejs \
-    yarn \
-    gnupg2
+    yarn 
+    
 
-RUN cd /opt/app/ && \
-    gem install rails && \
-    rails new blog ---skip-active-record --skip-active-storage -T --skip-bundle && \
-    cd /opt/app/blog && bundle install  && \ 
-    bundle add cequel && \
-    bundle add activemodel-serializers-xml && \
-    rails g scaffold post title body 
+RUN cd /opt/app/ && git clone https://github.com/conradwt/cassandra-example-using-rails.git && rm cassandra-example-using-rails/config/webpacker.yml
 
-COPY cequel.yml /opt/app/blog/config/ 
-COPY routes.rb /opt/app/blog/config/ 
-COPY post.rb  /opt/app/blog/app/models/
+RUN cd /opt/app/cassandra-example-using-rails && bundle install
+
+COPY cequel.yml /opt/app/cassandra-example-using-rails/config/ 
+
+COPY routes.rb /opt/app/cassandra-example-using-rails/config/ 
+
+COPY post.rb  /opt/app/cassandra-example-using-rails/app/models
+
+COPY run.sh /opt/app/cassandra-example-using-rails
 
 RUN rails cequel:keyspace:create && rails cequel:migrate
 
-RUN cd /opt/app/blog && bundle exec rails webpacker:install
+RUN chmod +x /opt/app/cassandra-example-using-rails/run.sh
+
+RUN cd /opt/app/cassandra-example-using-rails && bundle exec rails webpacker:install
+
+RUN chown -R appuser:appuser /opt/app
+
 USER appuser
 
-WORKDIR /opt/app/blog
+WORKDIR /opt/app/cassandra-example-using-rails
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD /opt/app/cassandra-example-using-rails/run.sh
 
 
