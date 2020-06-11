@@ -1,12 +1,5 @@
 FROM vady1/rails-app:latest
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update  && apt-get install -y \
-    vim \
-    nodejs \
-    yarn
-
-
 RUN cd /opt/app/ && git clone https://github.com/conradwt/cassandra-example-using-rails.git && rm cassandra-example-using-rails/config/webpacker.yml
 
 RUN cd /opt/app/cassandra-example-using-rails && bundle install

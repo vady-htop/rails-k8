@@ -1,6 +1,19 @@
 FROM ruby:2.7.1
 
-RUN cd /opt/app/ && git clone https://github.com/conradwt/cassandra-example-using-rails.git
+RUN mkdir /opt/app
+
+RUN groupadd -g 999 appuser && \
+    useradd -r -u 999 -g appuser appuser
+
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update  && apt-get install -y \
+    vim \
+    nodejs \
+    yarn 
+
+
+RUN cd /opt/app/ && git clone https://github.com/conradwt/cassandra-example-using-rails.git && rm cassandra-example-using-rails/config/webpacker.yml
 
 RUN cd /opt/app/cassandra-example-using-rails && bundle install
 
@@ -15,6 +28,8 @@ COPY run.sh /opt/app/cassandra-example-using-rails
 RUN rails cequel:keyspace:create && rails cequel:migrate
 
 RUN chmod +x /opt/app/cassandra-example-using-rails/run.sh
+
+RUN cd /opt/app/cassandra-example-using-rails && bundle exec rails webpacker:install
 
 RUN chown -R appuser:appuser /opt/app
 
