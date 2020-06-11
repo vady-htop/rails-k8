@@ -1,7 +1,5 @@
 FROM vady1/rails-app:latest
 
-RUN mkdir /opt/app
-
 RUN groupadd -g 999 appuser && \
     useradd -r -u 999 -g appuser appuser
 
@@ -28,8 +26,6 @@ COPY run.sh /opt/app/cassandra-example-using-rails
 RUN rails cequel:keyspace:create && rails cequel:migrate
 
 RUN chmod +x /opt/app/cassandra-example-using-rails/run.sh
-
-RUN cd /opt/app/cassandra-example-using-rails && bundle exec rails webpacker:install
 
 RUN chown -R appuser:appuser /opt/app
 
