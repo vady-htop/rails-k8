@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-minikube start
+minikube start --memory 4096
 minikube addons enable ingress
 helm repo add stable https://kubernetes-charts.storage.googleapis.com && helm repo update
 cd helm/Jenkins
