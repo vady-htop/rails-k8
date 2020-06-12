@@ -47,7 +47,7 @@ pipeline {
                     sh "cd helm && helm repo add bitnami https://charts.bitnami.com/bitnami && helm upgrade --install rails-app rails-app"
                 }
             }
-
+        }
         stage(' Deploy rails app') {
             when {
                 environment name: 'DEPLOY', value: 'true'
