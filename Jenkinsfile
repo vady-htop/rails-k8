@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 container('helm') {
-                    sh "cd helm && helm upgrade --install rails-app helm/rails-app"
+                    sh "cd helm && helm upgrade --install rails-app rails-app"
                 }
             }
         }
