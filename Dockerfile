@@ -12,4 +12,6 @@ COPY post.rb  /opt/app/cassandra-example-using-rails/app/models
 
 COPY development.rb  /opt/app/cassandra-example-using-rails/config/environments/
 
+COPY webpacker.yml /opt/app/cassandra-example-using-rails/config
+
 CMD /opt/app/cassandra-example-using-rails/run.sh
