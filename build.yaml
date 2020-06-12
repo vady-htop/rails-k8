@@ -4,6 +4,7 @@ metadata:
   labels:
     some-label: pod
 spec:
+  serviceAccountName: helm
   containers:
     - name: docker
       image: docker:19.03
