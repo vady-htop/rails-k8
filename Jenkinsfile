@@ -4,7 +4,8 @@ pipeline {
         NAME = "${env.BRANCH_NAME == "master" ? "example" : "example-staging"}"
         DOMAIN = 'localhost'
         REGISTRY = 'vady1/rails-app'
-        REGISTRY_CREDENTIAL = 'dockerhub-davidcampos'
+        REGISTRY_CREDENTIAL = 'dockerHub'
+        VERSION = "${BUILD_NUMBER}"
     }
     agent {
         kubernetes {
@@ -20,7 +21,7 @@ pipeline {
             }
             steps {
                 container('docker') {
-                    sh "docker build -t ${REGISTRY}:latest ."
+                    sh "docker build -t ${REGISTRY}:${VERSION} ."
                 }
             }
         }
