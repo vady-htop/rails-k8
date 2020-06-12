@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 container('helm') {
-                    sh "cd helm && helm repo add bitnami https://charts.bitnami.com/bitnami && helm  upgrade --install cassandra  -f values.yaml bitnami/cassandra"
+                    sh "cd helm/cassandra && helm repo add bitnami https://charts.bitnami.com/bitnami && helm  upgrade --install cassandra  -f values.yaml bitnami/cassandra"
                 }
             }
         }
