@@ -259,7 +259,7 @@ master:
   #  - |
   #    print 'adding global pipeline libraries, register properties, bootstrap jobs...'
   # Kubernetes secret that contains a 'credentials.xml' for Jenkins
-  credentialsXmlSecret: dockercredentials
+  credentialsXmlSecret: "dockercredentials"
   # Kubernetes secret that contains files to be put in the Jenkins 'secrets' directory,
   # useful to manage encryption keys used for credentials.xml for instance (such as
   # master.key and hudson.util.Secret)
@@ -427,7 +427,7 @@ master:
   # By default, the Jobs Map is only used to set the initial jobs the first time
   # that the chart is installed.  Setting `overwriteJobs` to `true` will overwrite
   # the jenkins jobs configuration with the contents of Jobs every time the pod starts.
-  overwriteJobs: false
+  overwriteJobs: true
 
   ingress:
     enabled: true
