@@ -67,7 +67,7 @@ master:
   componentName: "jenkins-master"
   image: "jenkins/jenkins"
   tag: "lts"
-  imagePullPolicy: "Always"
+  imagePullPolicy: "IfNotPresent"
   imagePullSecretName:
   # Optionally configure lifetime for master-container
   lifecycle:
@@ -235,7 +235,7 @@ master:
     - github-branch-source:2.5.8
     - docker-workflow:1.22
     - pipeline-utility-steps:2.3.1
-  
+
 
 
   # List of plugins to install in addition to those listed in master.installPlugins
