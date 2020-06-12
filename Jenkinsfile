@@ -5,7 +5,7 @@ pipeline {
         DOMAIN = 'localhost'
         REGISTRY = 'vady1/rails-app'
         REGISTRY_CREDENTIAL = 'dockerHub'
-        VERSION = "${BUILD_NUMBER}"
+        VERSION = "dev"
     }
     agent {
         kubernetes {
@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 container('helm') {
-                    sh "helm upgrade --install rails-app --set domain=${DOMAIN} ./helm/rails-app"
+                    sh "cd helm && helm upgrade --install rails-app helm/rails-app"
                 }
             }
         }
